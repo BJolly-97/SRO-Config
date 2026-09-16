@@ -5,7 +5,7 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.0] - 2026-09-16
 
 ### Added
 - `LICENSE` (MIT), `CHANGELOG.md`, and `CITATION.cff`.
@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `RELEASING.md`.
 - `Dockerfile` — a headless multi-stage image for the `dict` / `config` workflow,
   built and smoke-tested in CI and pushed to GHCR on release.
+- `sro-config examples` — copies the bundled example dataset(s) out of the installed
+  package to a local directory, so they're reachable after a real `pip`/`pipx` install
+  (not just from a source checkout).
 
 ### Changed
 - Renamed the project ahead of the first PyPI release: distribution `sro-config`
@@ -33,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `BJolly-97/SRO-Config` (formerly `Gen_Config_Install`).
 - The project is an installable package: distribution `sro-config`, import package
   `sro_config`, command `sro-config`.
-- Version is now derived from git tags via `setuptools-scm` (`gen_config.__version__`
+- Version is now derived from git tags via `setuptools-scm` (`sro_config.__version__`
   reads it from the installed metadata); there is no version string to maintain by hand.
 - Rewrote `README.md` as a concise landing page (badges, example plot, quickstart);
   the full command and output-file reference moved to the docs site.
@@ -53,10 +56,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   site-label column (9-column layout); previously every field was read one column
   to the left and the run crashed.
 - Enhancement-factor histograms label the y-axis with β, not Ψ.
+- The desktop GUI no longer spams `RuntimeError: main thread is not in main loop`
+  after closing the window and continuing to use the interactive menu.
+- Interactive prompts (`dict`'s equivalence questions, `config`/`vis`'s sub-lattice
+  number) now re-ask on invalid input instead of crashing the whole session with a
+  traceback.
 
-## [1.0.0] - 2024
+### Security
+- Hardened the `.cif` symmetry-operator parsing in `dict`: the text extracted from
+  the file was passed close to verbatim into `eval()`, so a crafted `.cif` could run
+  arbitrary Python just from being analysed. The three `eval()` call sites now
+  whitelist characters (only digits, arithmetic operators, and `x`/`y`/`z` can ever
+  appear) and disable builtins, closing the injection path without changing results
+  for real symmetry operators.
 
-First packaged release. The previously loose analysis scripts became an installable
-Python package (`src/gen_config/`) exposing a single `gen-config` command with
-`dict`, `config`, `vis` and `gui` subcommands, interactive and scripted/batch
-modes, a desktop GUI, and an end-to-end regression test suite.
+## Pre-release history
+
+Never tagged or published - kept here for context on how the project got to 0.1.0.
+
+**2024** - The previously loose analysis scripts became an installable Python package
+(`src/gen_config/`) exposing a single `gen-config` command with `dict`, `config`, `vis`
+and `gui` subcommands, interactive and scripted/batch modes, a desktop GUI, and an
+end-to-end regression test suite.
