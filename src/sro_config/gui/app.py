@@ -68,6 +68,14 @@ def main():
 
     root.mainloop()
 
+    # The default WM_DELETE_WINDOW handler already calls destroy() when the window is closed
+    # normally, but don't rely on that being the only way mainloop() ever returns - make sure
+    # it's actually gone before the gc.collect() below, or that collect can't reclaim anything.
+    try:
+        root.destroy()
+    except tk.TclError:
+        pass  # already destroyed
+
     # Force any now-orphaned tkinter.Variable objects (StringVar/IntVar held by the
     # tabs' widgets) to be collected now, while we're still right after the mainloop -
     # otherwise Python's cyclic GC can sweep them up arbitrarily later (e.g. mid-way

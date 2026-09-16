@@ -106,6 +106,29 @@ def clean_expression(expression):
     return cleaned_expression
 
 
+# Which symmetry-operator strings extracted from the .cif file are allowed to reach eval().
+# The extraction itself (see the "x"/"y"/"z"/"," heuristic above) is a loose text match, not a
+# real CIF grammar parser, so a crafted .cif could otherwise smuggle arbitrary Python through to
+# eval() as a "symmetry operation". Restricting to these characters means the only names that can
+# ever appear are x/y/z (there's no way to spell any other identifier, attribute access, call, or
+# string literal), which closes that off regardless of what the surrounding heuristic accepts.
+_SAFE_NUMERIC_EXPRESSION = re.compile(r"^[0-9+\-*/().\s]+$")
+_SAFE_SYMMETRY_EXPRESSION = re.compile(r"^[0-9xyz+\-*/().\s]+$")
+
+
+def _safe_eval(expression, pattern, local_vars=None):
+    """eval()s a symmetry-operator arithmetic expression parsed from a .cif file, having first
+    verified it only contains characters `pattern` allows, with builtins disabled as
+    defense-in-depth. Raises ValueError instead of evaluating anything else."""
+    if not pattern.match(expression):
+        raise ValueError(
+            f"Unexpected characters in symmetry-operator expression '{expression}' - refusing to "
+            "evaluate it. This usually means the .cif file's symmetry operators are malformed "
+            "(or the file has been tampered with)."
+        )
+    return eval(expression, {"__builtins__": {}}, dict(local_vars or {}))  # noqa: S307
+
+
 def parse_cif_numeric_value(line):
     """
     Extracts the numeric value from a CIF header line (e.g. '_cell_length_a   5.4310(2)\n'),
@@ -445,7 +468,7 @@ def run(cif, equivalence=None):
         for i in columns_A:
             for j in range(len(sym_ops)):
                 sym_ops_df_loop.loc[j, i] = str(
-                    eval(sym_ops_df_loop.loc[j, i])
+                    _safe_eval(sym_ops_df_loop.loc[j, i], _SAFE_NUMERIC_EXPRESSION)
                 )  # In theory, takes any symmetry operation involving + or - some fraction and evaluates for exact position
                 sym_ops_df_loop.loc[j, i] = Fraction(sym_ops_df_loop.loc[j, i]).limit_denominator(8)
 
@@ -586,11 +609,15 @@ def run(cif, equivalence=None):
             merge_df = pd.concat([merge_df, supercell[i]], axis=0)
 
         joined_element = "/".join(atom_name_storage[i] for i in answer_list)
-        atom_name_storage.append(joined_element)
 
         merge_df.drop_duplicates(inplace=True)
         merge_df.reset_index(inplace=True)
         merge_df.drop(["index"], axis=1, inplace=True)
+
+        # Only mutate the shared state once every fallible step above has succeeded, so a
+        # failure partway through can't leave atom_name_storage and supercell desynced by one
+        # entry (the caller retries on KeyError/IndexError, assuming nothing was applied yet).
+        atom_name_storage.append(joined_element)
         supercell[len(supercell)] = merge_df
 
     if len(coord_df) <= 1:
@@ -945,7 +972,9 @@ def run(cif, equivalence=None):
                 # which axis letter (or sign) matched - the only real question is whether an x/y/z
                 # variable is present at all, so that's collapsed to one guard.
                 if any(letter in sym_ops_NN[k][j] for letter in ("x", "y", "z")):
-                    result = eval(sym_ops_NN[k][j])
+                    result = _safe_eval(
+                        sym_ops_NN[k][j], _SAFE_SYMMETRY_EXPRESSION, {"x": x, "y": y, "z": z}
+                    )
                     Origin_sym_dump[k] = result
                 else:
                     # A valid general-position symmetry operator can't have a component with no
@@ -998,7 +1027,9 @@ def run(cif, equivalence=None):
                 # See the equivalent branch above (Origin_sym_dump loop) - every branch here was
                 # also the identical `eval(symmetry_collect[k][j])`, so collapsed to one guard.
                 if any(letter in symmetry_collect[k][j] for letter in ("x", "y", "z")):
-                    result = eval(symmetry_collect[k][j])
+                    result = _safe_eval(
+                        symmetry_collect[k][j], _SAFE_SYMMETRY_EXPRESSION, {"x": x, "y": y, "z": z}
+                    )
                     NN_sym_dump[k] = result
                 else:
                     # See the equivalent branch above - this shouldn't be reachable for a valid
