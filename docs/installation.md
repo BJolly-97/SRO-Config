@@ -9,6 +9,11 @@
 pip install sro-config
 ```
 
+As a note, installation via pip may throw an error if the installed version of Python
+doesn't add its `Scripts` folder to `PATH` by default. Typing `sro-config` in-terminal
+may therefore behave unexpectedly. This should not be a concern for those who have used
+the python.org installer, which adds to `PATH` automatically.
+
 For an isolated install of just the command-line tool (recommended if you only want to
 *run* it, not import it):
 
@@ -23,17 +28,6 @@ uv tool install sro-config
     packages into isolated environments, so `sro-config` and its dependencies
     never clash with anything else on your system. If you intend to use pipx,
     see the [pipx installation guide](https://pipx.pypa.io/latest/how-to/install-pipx.html).
-
-    For Windows:
-
-    ```bash
-    python -m pip install --user pipx
-    python -m pipx ensurepath
-
-    # Restart your terminal, then:
-
-    python -m pipx install sro-config
-    ```
 
 
 ## From source
