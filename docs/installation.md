@@ -6,13 +6,18 @@
 ## From PyPI
 
 ```bash
-pip install sro-config
+python -m pip install sro-config
 ```
 
-As a note, installation via pip may throw an error if the installed version of Python
-doesn't add its `Scripts` folder to `PATH` by default. Typing `sro-config` in-terminal
-may therefore behave unexpectedly. This should not be a concern for those who have used
-the python.org installer, which adds to `PATH` automatically.
+??? info " NOTE "
+
+    As a note, installation via pip may throw an error if the installed version of Python
+    doesn't add its `Scripts` folder to `PATH` by default. Typing `sro-config` in-terminal
+    may therefore behave unexpectedly. This should not be a concern for those who have used
+    the python.org installer, which adds to `PATH` automatically.
+
+    This is avoided when using pipx.
+
 
 For an isolated install of just the command-line tool (recommended if you only want to
 *run* it, not import it):
