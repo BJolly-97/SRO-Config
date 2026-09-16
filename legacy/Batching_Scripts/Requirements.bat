@@ -4,7 +4,7 @@ title Configurational Analysis v1.0
 
 cd /d "%~dp0.."
 
-echo Installing Gen_Config and required Python modules...
+echo Installing SRO-Config and required Python modules...
 python3 -m pip install --quiet --no-warn-script-location -e .
 if %errorlevel% neq 0 (
     echo Dependency install failed. Check Python installation.

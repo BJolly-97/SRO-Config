@@ -976,7 +976,7 @@ def run_batch(dict_dir, sublattice, rmc6f_paths, on_progress=None):
     one dataset at a time, in-process (no per-file prompting, no subprocess spawning).
 
     A single bad .rmc6f file doesn't abort the run: its error is caught, reported, and
-    the batch continues with the next file. This is what backs `gen-config analyse` when
+    the batch continues with the next file. This is what backs `sro-config analyse` when
     it's given more than one .rmc6f path (via repeated --rmc6f or --rmc6f-glob) - a batch
     of one file and a batch of a thousand go through this exact same loop.
 

@@ -3,7 +3,7 @@ requires = ["setuptools>=77.0.0", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gen-config"
+name = "sro-config"
 dynamic = ["version"]
 description = "Generalised tool for Clapp-style configurational analysis of RMCProfile large-box atomic models"
 readme = "README.md"
@@ -59,15 +59,18 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/BJolly-97/Gen_Config_Install"
-Repository = "https://github.com/BJolly-97/Gen_Config_Install"
-Issues = "https://github.com/BJolly-97/Gen_Config_Install/issues"
+Homepage = "https://github.com/BJolly-97/SRO-Config"
+Repository = "https://github.com/BJolly-97/SRO-Config"
+Issues = "https://github.com/BJolly-97/SRO-Config/issues"
 
 [project.scripts]
-gen-config = "gen_config.cli:main"
+sro-config = "sro_config.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+sro_config = ["data/examples/**/*"]
 
 [tool.setuptools_scm]
 # Version is derived from the latest `vX.Y.Z` git tag. Untagged builds get a
@@ -97,13 +100,13 @@ ignore = [
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["gen_config"]
+source = ["sro_config"]
 
 [tool.coverage.report]
 exclude_also = [
     "if __name__ == .__main__.:",
     "raise SystemExit",
 ]
-# The Tkinter GUI (gen_config.gui.*) has no automated tests yet - it drags the
+# The Tkinter GUI (sro_config.gui.*) has no automated tests yet - it drags the
 # headline number down but the numerical core sits well above this floor.
 fail_under = 60

@@ -4,7 +4,7 @@
 
 ```bash
 git clone <repo>
-cd Gen_Config_Install
+cd SRO-Config
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 pre-commit install

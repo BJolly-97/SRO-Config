@@ -27,8 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   built and smoke-tested in CI and pushed to GHCR on release.
 
 ### Changed
-- The project is an installable package: distribution `gen-config`, import package
-  `gen_config`, command `gen-config`.
+- Renamed the project ahead of the first PyPI release: distribution `sro-config`
+  (formerly `gen-config`), import package `sro_config` (formerly `gen_config`),
+  command `sro-config` (formerly `gen-config`), and the GitHub repository is now
+  `BJolly-97/SRO-Config` (formerly `Gen_Config_Install`).
+- The project is an installable package: distribution `sro-config`, import package
+  `sro_config`, command `sro-config`.
 - Version is now derived from git tags via `setuptools-scm` (`gen_config.__version__`
   reads it from the installed metadata); there is no version string to maintain by hand.
 - Rewrote `README.md` as a concise landing page (badges, example plot, quickstart);

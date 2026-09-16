@@ -4,7 +4,7 @@
 # interactive `vis` viewer and the desktop GUI need a display and are not usable
 # from a container.
 #
-#   docker run --rm -v "$PWD:/data" gen-config config --dict-dir . --sublattice 0 --rmc6f run.rmc6f
+#   docker run --rm -v "$PWD:/data" sro-config config --dict-dir . --sublattice 0 --rmc6f run.rmc6f
 
 # ---- build: produce the wheel (version comes from git via setuptools-scm) ----
 FROM python:3.14-slim AS build
@@ -21,9 +21,9 @@ RUN pip install --no-cache-dir build \
 # ---- runtime: slim image with just the package ----
 FROM python:3.14-slim AS runtime
 
-LABEL org.opencontainers.image.title="gen-config" \
+LABEL org.opencontainers.image.title="sro-config" \
       org.opencontainers.image.description="Clapp-style configurational analysis of RMCProfile large-box atomic models" \
-      org.opencontainers.image.source="https://github.com/BJolly-97/Gen_Config_Install" \
+      org.opencontainers.image.source="https://github.com/BJolly-97/SRO-Config" \
       org.opencontainers.image.licenses="MIT"
 
 ENV MPLBACKEND=Agg \
@@ -39,5 +39,5 @@ RUN useradd --create-home --uid 1000 analyst \
 USER analyst
 WORKDIR /data
 
-ENTRYPOINT ["gen-config"]
+ENTRYPOINT ["sro-config"]
 CMD ["--help"]

@@ -48,7 +48,7 @@ jobs:
       - name: Test
         run: >-
           pytest
-          --cov=gen_config
+          --cov=sro_config
           --cov-report=term-missing
           --cov-report=xml
       - name: Upload coverage
@@ -97,16 +97,16 @@ jobs:
         with:
           fetch-depth: 0  # setuptools-scm
       - name: Build image
-        run: docker build -f docker/Dockerfile -t gen-config:ci .
+        run: docker build -f docker/Dockerfile -t sro-config:ci .
       - name: Smoke test
         run: |
-          docker run --rm gen-config:ci --help
-          docker run --rm --entrypoint python gen-config:ci -c "import gen_config; print(gen_config.__version__)"
+          docker run --rm sro-config:ci --help
+          docker run --rm --entrypoint python sro-config:ci -c "import sro_config; print(sro_config.__version__)"
       - name: Run the bundled example in the container
         run: |
           mkdir -p run
           cp examples/FeNi/FeNi.cif examples/FeNi/FeNi_solid_solution.rmc6f run/
           chmod 777 run
-          docker run --rm -v "$PWD/run:/data" gen-config:ci dict --cif FeNi.cif --equivalence 0,1
-          docker run --rm -v "$PWD/run:/data" gen-config:ci config --dict-dir . --sublattice 0 --rmc6f FeNi_solid_solution.rmc6f
+          docker run --rm -v "$PWD/run:/data" sro-config:ci dict --cif FeNi.cif --equivalence 0,1
+          docker run --rm -v "$PWD/run:/data" sro-config:ci config --dict-dir . --sublattice 0 --rmc6f FeNi_solid_solution.rmc6f
           test -f run/FeNi_solid_solution_sub0_EF.clapp

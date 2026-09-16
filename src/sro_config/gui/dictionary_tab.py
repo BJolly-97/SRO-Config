@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-from gen_config import dictionary
+from sro_config import dictionary
 
 from .helpers import BackgroundJob
 

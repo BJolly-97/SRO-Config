@@ -16,7 +16,7 @@ under-represented.
 
 ## What this tool does
 
-`gen-config` applies that idea to the large-box models fitted by RMCProfile, and lifts
+`sro-config` applies that idea to the large-box models fitted by RMCProfile, and lifts
 two of Clapp's original restrictions:
 
 - **Any crystal structure**, not just primitive / FCC / BCC — the nearest-neighbour

@@ -1,6 +1,6 @@
 """
 Tests for the scripted (non-interactive) entry points: dictionary.run()/histograms.run(),
-histograms.run_batch(), and the gen-config CLI built on top of them.
+histograms.run_batch(), and the sro-config CLI built on top of them.
 """
 
 import shutil
@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from gen_config import cli, dictionary, histograms, visualiser
+from sro_config import cli, dictionary, histograms, visualiser
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

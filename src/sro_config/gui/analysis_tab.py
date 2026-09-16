@@ -3,7 +3,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-from gen_config import histograms
+from sro_config import histograms
 
 from .helpers import BackgroundJob, read_finsub
 

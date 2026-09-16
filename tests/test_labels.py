@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from gen_config import dictionary, histograms
+from sro_config import dictionary, histograms
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -84,7 +84,7 @@ def test_pseudo_binary_label_matches_examples():
     dict/config run) against the worked examples from the feature request: a quaternary
     Ni/Co/Cr/Fe system's Ni-Cr:Co-Fe partition, and a ternary Ni/Co/Cr system's
     single-species-vs-rest partitions."""
-    from gen_config.histograms import modulo_sep
+    from sro_config.histograms import modulo_sep
 
     def label(n1, no_types_new, species_names):
         red = modulo_sep(n1, 2, no_types_new)

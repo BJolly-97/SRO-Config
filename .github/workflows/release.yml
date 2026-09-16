@@ -41,7 +41,7 @@ jobs:
     if: github.repository_owner == 'BJolly-97'
     environment:
       name: pypi
-      url: https://pypi.org/p/gen-config
+      url: https://pypi.org/p/sro-config
     permissions:
       id-token: write
     steps:
@@ -69,7 +69,7 @@ jobs:
       - uses: docker/metadata-action@v6
         id: meta
         with:
-          images: ghcr.io/bjolly-97/gen-config
+          images: ghcr.io/bjolly-97/sro-config
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite both the software and the method paper below."
-title: "gen-config: Generalised configurational analysis of RMCProfile large-box models"
+title: "SRO-Config: Generalised configurational analysis of RMCProfile large-box models"
 abstract: >-
   A tool for Clapp-style configurational analysis of the large-box atomic models
   produced by RMCProfile. Generalises the method of Clapp (1971) - originally
@@ -18,7 +18,7 @@ authors:
     affiliation: "University of Sheffield"
 version: "1.0.0"
 license: MIT
-repository-code: "https://github.com/BJolly-97/Gen_Config_Install"
+repository-code: "https://github.com/BJolly-97/SRO-Config"
 keywords:
   - configurational analysis
   - reverse Monte Carlo

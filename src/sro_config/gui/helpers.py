@@ -1,5 +1,5 @@
 """
-Shared helpers for the Gen_Config GUI: reading dictionary metadata for combo/list boxes,
+Shared helpers for the SRO-Config GUI: reading dictionary metadata for combo/list boxes,
 and a small thread+queue pattern (BackgroundJob) for running the existing run()/run_batch()
 functions without freezing the Tkinter main loop during a real analysis.
 """

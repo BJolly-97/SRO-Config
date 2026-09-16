@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from gen_config import dictionary, histograms, visualiser
+from sro_config import dictionary, histograms, visualiser
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

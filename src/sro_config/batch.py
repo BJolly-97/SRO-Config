@@ -8,7 +8,7 @@ sharing one global namespace.
 @author: Ben Jolly
 """
 
-from gen_config import dictionary, histograms
+from sro_config import dictionary, histograms
 
 
 def ask_yes_no(prompt):

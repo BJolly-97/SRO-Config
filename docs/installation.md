@@ -1,26 +1,26 @@
 # Installation
 
-`gen-config` requires **Python 3.9 or newer**. It depends only on `numpy`, `pandas`,
+`sro-config` requires **Python 3.9 or newer**. It depends only on `numpy`, `pandas`,
 `matplotlib` and `tqdm`, all of which install as wheels on Windows, macOS and Linux.
 
 ## From PyPI
 
 ```bash
-pip install gen-config
+pip install sro-config
 ```
 
 For an isolated install of just the command-line tool (recommended if you only want to
 *run* it, not import it):
 
 ```bash
-pipx install gen-config
+pipx install sro-config
 # or
-uv tool install gen-config
+uv tool install sro-config
 ```
 ??? info "New to pipx? (optional reading)"
 
     pipx is a separate installation tool that downloads Python command-line
-    packages into isolated environments, so `gen-config` and its dependencies
+    packages into isolated environments, so `sro-config` and its dependencies
     never clash with anything else on your system. If you intend to use pipx,
     see the [pipx installation guide](https://pipx.pypa.io/latest/how-to/install-pipx.html).
 
@@ -32,15 +32,15 @@ uv tool install gen-config
 
     # Restart your terminal, then:
 
-    python -m pipx install gen-config
+    python -m pipx install sro-config
     ```
 
 
 ## From source
 
 ```bash
-git clone https://github.com/BJolly-97/Gen_Config_Install
-cd Gen_Config_Install
+git clone https://github.com/BJolly-97/SRO-Config
+cd SRO-Config
 pip install -e ".[dev]"
 ```
 
@@ -51,7 +51,7 @@ commands with no Python install on the host — useful for reproducible batch ru
 cluster or in CI. Mount your working directory at `/data`:
 
 ```bash
-docker run --rm -v "$PWD:/data" ghcr.io/bjolly-97/gen-config \
+docker run --rm -v "$PWD:/data" ghcr.io/bjolly-97/sro-config \
     config --dict-dir . --sublattice 0 --rmc6f run.rmc6f
 ```
 
@@ -60,10 +60,10 @@ the container.
 
 ## What you get
 
-A single command, **`gen-config`**. The importable package is `gen_config`:
+A single command, **`sro-config`**. The importable package is `sro_config`:
 
 ```python
-from gen_config import dictionary, histograms, visualiser
+from sro_config import dictionary, histograms, visualiser
 ```
 
 The pre-package script names (`Histograms_v2_2.py`, `Configuration_Master.py`, …) still
@@ -71,7 +71,7 @@ exist as thin wrappers under `legacy/`, purely so old scripts keep working.
 
 ## The GUI
 
-`gen-config gui` opens a desktop GUI (Dictionary / Analysis / Visualiser tabs). It needs
+`sro-config gui` opens a desktop GUI (Dictionary / Analysis / Visualiser tabs). It needs
 Tkinter:
 
 - **Windows / macOS** — bundled with the python.org installer.

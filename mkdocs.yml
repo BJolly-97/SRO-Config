@@ -1,8 +1,8 @@
-site_name: gen-config
+site_name: SRO-Config
 site_description: Generalised Clapp-style configurational analysis for RMCProfile large-box atomic models
-site_url: https://bjolly-97.github.io/Gen_Config_Install/
-repo_url: https://github.com/BJolly-97/Gen_Config_Install
-repo_name: BJolly-97/Gen_Config_Install
+site_url: https://bjolly-97.github.io/SRO-Config/
+repo_url: https://github.com/BJolly-97/SRO-Config
+repo_name: BJolly-97/SRO-Config
 edit_uri: edit/main/docs/
 
 theme:

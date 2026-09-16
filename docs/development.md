@@ -1,8 +1,8 @@
 # Development
 
 ```bash
-git clone https://github.com/BJolly-97/Gen_Config_Install
-cd Gen_Config_Install
+git clone https://github.com/BJolly-97/SRO-Config
+cd SRO-Config
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 pre-commit install
@@ -23,7 +23,7 @@ test matrix (Linux / macOS / Windows × Python 3.9 / 3.11 / 3.13) and a package 
 
 | Path | |
 | --- | --- |
-| `src/gen_config/` | the package — `dictionary`, `histograms`, `visualiser`, `cli`, `batch`, `gui/` |
+| `src/sro_config/` | the package — `dictionary`, `histograms`, `visualiser`, `cli`, `batch`, `gui/` |
 | `tests/` | end-to-end regression tests + fixtures |
 | `examples/` | runnable sample datasets |
 | `docs/` | this documentation (MkDocs) |

@@ -1,5 +1,5 @@
 """
-Single entry point for Gen_Config: `gen-config`.
+Single entry point for SRO-Config: `sro-config`.
 
 - No arguments: the interactive command menu (equivalent to the old .bat/.sh launchers) -
   dict/config/vis/exit, each falling through to that module's fully-interactive main().
@@ -13,9 +13,12 @@ Single entry point for Gen_Config: `gen-config`.
 
 import argparse
 import glob as glob_module
+import importlib.resources
+import shutil
 import sys
+from pathlib import Path
 
-from gen_config import dictionary, histograms, visualiser
+from sro_config import dictionary, histograms, visualiser
 
 
 def _run_repl():
@@ -25,7 +28,7 @@ def _run_repl():
             input(
                 "> Enter command (i.e. dict (Configurational Dictionaries), "
                 "config (Configurational Analysis), vis (Configuration Visualiser), "
-                "gui (Desktop GUI) or exit): "
+                "gui (Desktop GUI), examples (Copy Example Data) or exit): "
             )
             .strip()
             .lower()
@@ -38,11 +41,13 @@ def _run_repl():
         elif command == "vis":
             visualiser.main()
         elif command == "gui":
-            from gen_config.gui.app import (
+            from sro_config.gui.app import (
                 main as gui_main,
             )  # lazy: don't force a Tkinter/display dependency on plain CLI usage
 
             gui_main()
+        elif command == "examples":
+            _run_examples("examples")
         elif command == "exit":
             break
         else:
@@ -75,9 +80,35 @@ def _resolve_rmc6f_paths(rmc6f, rmc6f_glob):
     return paths
 
 
+def _run_examples(dest):
+    """Copies the bundled example dataset(s) out of the installed package to `dest`."""
+    dest_dir = Path(dest)
+    bundled = importlib.resources.files("sro_config") / "data" / "examples"
+
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    copied = []
+    for entry in sorted(bundled.iterdir(), key=lambda p: p.name):
+        if not entry.is_dir():
+            continue
+        target = dest_dir / entry.name
+        if target.exists():
+            print(f"Skipping '{target}': already exists.")
+            continue
+        with importlib.resources.as_file(entry) as source:
+            shutil.copytree(source, target)
+        copied.append(target)
+
+    if copied:
+        print(f"Copied {len(copied)} example(s) to '{dest_dir}':")
+        for target in copied:
+            print(f"  - {target}")
+    else:
+        print(f"No new examples copied (nothing to copy, or all already present in '{dest_dir}').")
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
-        prog="gen-config",
+        prog="sro-config",
         description="Clapp-style configurational analysis of RMCProfile large-box models. "
         "Run with no arguments for the interactive menu.",
     )
@@ -129,6 +160,15 @@ def build_parser():
         "gui", help="Launch the desktop GUI (Dictionary/Analysis/Visualiser as one window)."
     )
 
+    p_examples = sub.add_parser(
+        "examples", help="Copy the bundled example dataset(s) to a local directory."
+    )
+    p_examples.add_argument(
+        "--dest",
+        default="examples",
+        help="Directory to copy the examples into (default: ./examples).",
+    )
+
     return parser
 
 
@@ -167,11 +207,14 @@ def main(argv=None):
             visualiser.main(dict_dir=args.dict_dir)
 
     elif args.command == "gui":
-        from gen_config.gui.app import (
+        from sro_config.gui.app import (
             main as gui_main,
         )  # lazy: don't force a Tkinter/display dependency on plain CLI usage
 
         gui_main()
+
+    elif args.command == "examples":
+        _run_examples(args.dest)
 
 
 if __name__ == "__main__":

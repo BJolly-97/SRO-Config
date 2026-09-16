@@ -3,7 +3,7 @@ from tkinter import filedialog, messagebox, ttk
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-from gen_config import visualiser
+from sro_config import visualiser
 
 from .helpers import read_config_labels, read_finsub
 

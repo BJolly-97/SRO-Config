@@ -1,19 +1,19 @@
 # Usage
 
-Everything goes through one command, **`gen-config`**, with three subcommands:
+Everything goes through one command, **`sro-config`**, with three subcommands:
 `dict`, `config` and `vis`. Each works two ways — **interactively** (run it with no
 flags and answer prompts) or **scripted** (pass flags, no prompts). One dataset and
 several hundred go through the same code path.
 
 A complete, runnable walk-through is in
-[`examples/FeNi/`](https://github.com/BJolly-97/Gen_Config_Install/tree/main/examples/FeNi).
+[`examples/FeNi/`](https://github.com/BJolly-97/SRO-Config/tree/main/examples/FeNi).
 
 ## `dict` — structure dictionaries
 
 Generates the per-structure lookup files the analysis needs. Requires a `.cif`.
 
 ```bash
-gen-config dict --cif FeNi.cif --equivalence 0,1
+sro-config dict --cif FeNi.cif --equivalence 0,1
 ```
 
 - `--cif PATH` — the structure file. Omit to be prompted.
@@ -33,10 +33,10 @@ directory.
 
 ```bash
 # one file
-gen-config config --dict-dir . --sublattice 0 --rmc6f run001.rmc6f
+sro-config config --dict-dir . --sublattice 0 --rmc6f run001.rmc6f
 
 # every matching file, in one process
-gen-config config --dict-dir . --sublattice 0 --rmc6f-glob "configs/*.rmc6f"
+sro-config config --dict-dir . --sublattice 0 --rmc6f-glob "configs/*.rmc6f"
 ```
 
 - `--dict-dir PATH` — directory holding the files `dict` produced.
@@ -65,20 +65,20 @@ Plots Clapp configurations for a sub-lattice as interactive, rotatable 3D scatte
 (one pop-up window per label; occupied neighbour = red, empty = black).
 
 ```bash
-gen-config vis --dict-dir . --sublattice 0 --config 1,12,34
+sro-config vis --dict-dir . --sublattice 0 --config 1,12,34
 ```
 
 - `--config LABELS` — comma-separated Configuration labels, in any order.
 
 ## Interactive menu
 
-Run `gen-config` with **no arguments** for a prompt-driven menu offering `dict`,
+Run `sro-config` with **no arguments** for a prompt-driven menu offering `dict`,
 `config`, `vis`, `gui` and `exit` — the same prompts as each subcommand run flagless.
 
 ## Desktop GUI
 
 ```bash
-gen-config gui
+sro-config gui
 ```
 
 opens the Dictionary / Analysis / Visualiser tabs in one window. See
@@ -86,6 +86,6 @@ opens the Dictionary / Analysis / Visualiser tabs in one window. See
 
 ## Legacy batch orchestrator
 
-`python -m gen_config.batch` (the old `legacy/Batching_Scripts/Configuration_Master.py`)
-still works as a Y/N-prompted dict-then-config runner, but `gen-config config
+`python -m sro_config.batch` (the old `legacy/Batching_Scripts/Configuration_Master.py`)
+still works as a Y/N-prompted dict-then-config runner, but `sro-config config
 --rmc6f-glob` is the more direct way to do real batch work.

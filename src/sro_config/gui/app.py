@@ -1,4 +1,4 @@
-"""Entry point for the Gen_Config desktop GUI - `gen-config gui`."""
+"""Entry point for the SRO-Config desktop GUI - `sro-config gui`."""
 
 import sys
 
@@ -51,12 +51,12 @@ def main():
 
     matplotlib.use("TkAgg")
 
-    from gen_config.gui.analysis_tab import AnalysisTab
-    from gen_config.gui.dictionary_tab import DictionaryTab
-    from gen_config.gui.visualiser_tab import VisualiserTab
+    from sro_config.gui.analysis_tab import AnalysisTab
+    from sro_config.gui.dictionary_tab import DictionaryTab
+    from sro_config.gui.visualiser_tab import VisualiserTab
 
     root = tk.Tk()
-    root.title("Gen_Config - Configurational Analysis")
+    root.title("SRO-Config - Configurational Analysis")
     root.geometry("1150x760")
 
     notebook = ttk.Notebook(root)
