@@ -17,6 +17,8 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from sro_config._prompts import prompt_int_list, prompt_yes_no
+
 # %%
 
 
@@ -617,27 +619,27 @@ def run(cif, equivalence=None):
 
     else:
         # Interactive path: prompt for each equivalence group in turn.
-        answer = (
-            input("\nWould you like to set any lattice-site equivalences? (Y/N):\t").strip().upper()
-        )
-
-        if answer == "N":
-            pass
-        elif answer == "Y":
+        if prompt_yes_no("\nWould you like to set any lattice-site equivalences? (Y/N):\t"):
+            answer = "Y"
             exit_condition = 0
             while exit_condition == 0:
-                answer_2 = input(
-                    "Select equivalent atomic sublattices, in the form '0,1,2,...,N':\t"
-                )
-                answer_list = [int(x) for x in answer_2.split(",")]
-                super_answer.append(answer_list)
-                _apply_equivalence_group(answer_list)
+                while True:
+                    answer_list = prompt_int_list(
+                        "Select equivalent atomic sublattices, in the form '0,1,2,...,N':\t"
+                    )
+                    try:
+                        _apply_equivalence_group(answer_list)
+                    except (KeyError, IndexError):
+                        print(
+                            f"Invalid input - {answer_list} isn't a listed sub-lattice number "
+                            "(see the list above). Please try again.\n"
+                        )
+                        continue
+                    else:
+                        super_answer.append(answer_list)
+                        break
 
-                answer_3 = (
-                    input("Would you like to select another equivalency? (Y/N):\t").strip().upper()
-                )
-
-                if answer_3 == "Y":
+                if prompt_yes_no("Would you like to select another equivalency? (Y/N):\t"):
                     continue
                 else:
                     super_answer_merge = list(itertools.chain.from_iterable(super_answer))
@@ -646,10 +648,8 @@ def run(cif, equivalence=None):
                         del supercell[i]
                     supercell = {i: v for i, v in enumerate(supercell.values())}
                     exit_condition += 1
-
         else:
-            print("Invalid input.\n")
-            sys.exit()
+            answer = "N"
 
     atom_name = pd.DataFrame(atom_name_storage)
 

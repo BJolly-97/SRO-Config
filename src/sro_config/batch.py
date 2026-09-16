@@ -9,16 +9,7 @@ sharing one global namespace.
 """
 
 from sro_config import dictionary, histograms
-
-
-def ask_yes_no(prompt):
-    """Prompts for a Y/N answer; returns True/False, or None for anything else."""
-    answer = input(prompt).strip().upper()
-    if answer == "Y":
-        return True
-    if answer == "N":
-        return False
-    return None
+from sro_config._prompts import prompt_yes_no
 
 
 def main():
@@ -28,20 +19,11 @@ def main():
     print("\t\t    University of Sheffield, UK\n")
     print("====================================================================\n")
 
-    gen_dict = ask_yes_no("Generate Configurational Dictionary files? (Y/N):\t")
+    if prompt_yes_no("Generate Configurational Dictionary files? (Y/N):\t"):
+        dictionary.main()
 
-    if gen_dict is None:
-        print("\nInvalid input.")
-    else:
-        if gen_dict:
-            dictionary.main()
-
-        run_hist = ask_yes_no("\nCalculate Enhancement Factors and generate Histograms? (Y/N):\t")
-
-        if run_hist is None:
-            print("\nInvalid input.")
-        elif run_hist:
-            histograms.main()
+    if prompt_yes_no("\nCalculate Enhancement Factors and generate Histograms? (Y/N):\t"):
+        histograms.main()
 
     print("\n--------------End---------------\n\n")
 

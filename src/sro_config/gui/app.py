@@ -68,6 +68,15 @@ def main():
 
     root.mainloop()
 
+    # Force any now-orphaned tkinter.Variable objects (StringVar/IntVar held by the
+    # tabs' widgets) to be collected now, while we're still right after the mainloop -
+    # otherwise Python's cyclic GC can sweep them up arbitrarily later (e.g. mid-way
+    # through an unrelated `dict`/`config` run in the same interactive-menu process),
+    # and their __del__ then raises "main thread is not in main loop" (CPython gh-83274).
+    import gc
+
+    gc.collect()
+
 
 if __name__ == "__main__":
     main()

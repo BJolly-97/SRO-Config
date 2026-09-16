@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from sro_config._prompts import prompt_int
+
 # %%
 
 
@@ -134,7 +136,7 @@ def run(dict_dir, sublattice=None, rmc6f=None):
         print("\nEnter desired sublattice for analysis (e.g. 0):\n")
         for i in range(len(sublab)):
             print(sublab.loc[i, 0])
-        sub_num = str(input())
+        sub_num = str(prompt_int(""))
     else:
         sub_num = str(sublattice)
 

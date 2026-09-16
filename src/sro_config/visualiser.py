@@ -11,6 +11,8 @@ import numpy as np
 import pandas as pd
 from matplotlib.figure import Figure
 
+from sro_config._prompts import prompt_int, prompt_yes_no
+
 
 def _load_basis_and_config(dict_dir, sublattice):
     """Reads the .basisN/.cfgdictN files for one sub-lattice. Returns (basis_df, config_df)."""
@@ -198,7 +200,7 @@ def main(dict_dir=None):
         for i in range(len(sublab)):
             print(sublab.loc[i, 0])
 
-        sub_num = str(input())
+        sub_num = str(prompt_int(""))
 
         input_config_list = input(
             "\nInput desired configuration(s) (NB: For multiple configuration plots, separate values using commas.):\t"
@@ -206,13 +208,7 @@ def main(dict_dir=None):
 
         run(dict_dir, sub_num, input_config_list)
 
-        A = input("\nContinue with visualisation for selected sublattice? (Y/N)\n").strip().upper()
-        if A == "Y":
-            pass
-        elif A == "N":
-            exit_cond += 1
-        else:
-            print("\nInvalid Input.\n")
+        if not prompt_yes_no("\nContinue with visualisation for selected sublattice? (Y/N)\n"):
             exit_cond += 1
 
     print("\n--------------End---------------\n\n")
