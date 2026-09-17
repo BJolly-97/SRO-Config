@@ -9,11 +9,11 @@
 python -m pip install --user pipx
 python -m pipx ensurepath
 
-:: close this terminal, open a new one
+# Close your terminal and open a new one
 
 python -m pipx install sro-config
 
-:: close and reopen once more
+# Close the terminal and reopen again
 
 sro-config --help
 ```
