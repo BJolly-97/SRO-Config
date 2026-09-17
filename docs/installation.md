@@ -6,10 +6,24 @@
 ## From PyPI
 
 ```bash
-python -m pip install sro-config
+python -m pip install --user pipx
+python -m pipx ensurepath
+
+:: close this terminal, open a new one
+
+python -m pipx install sro-config
+
+:: close and reopen once more
+
+sro-config --help
 ```
 
-??? info " NOTE "
+For an isolated install of just the command-line tool (recommended if you only want to run it, not import it):
+
+```bash
+uv tool install sro-config
+```
+??? info "New to pipx? (optional reading)"
 
     As a note, installation via pip may throw an error if the installed version of Python
     doesn't add its `Scripts` folder to `PATH` by default. Typing `sro-config` in-terminal
@@ -17,17 +31,6 @@ python -m pip install sro-config
     the python.org installer, which adds to `PATH` automatically.
 
     This is avoided when using pipx.
-
-
-For an isolated install of just the command-line tool (recommended if you only want to
-*run* it, not import it):
-
-```bash
-pipx install sro-config
-# or
-uv tool install sro-config
-```
-??? info "New to pipx? (optional reading)"
 
     pipx is a separate installation tool that downloads Python command-line
     packages into isolated environments, so `sro-config` and its dependencies
