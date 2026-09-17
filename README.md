@@ -27,49 +27,65 @@ The original code files for the package can be found in a separate public repo: 
 
 ## Installation
 
-```bash
-pip install sro-config
-```
+`sro-config` requires **Python 3.9 or newer**. It depends only on `numpy`, `pandas`,
+`matplotlib` and `tqdm`, all of which install as wheels on Windows, macOS and Linux.
 
-or, for an isolated command-line install:
-
-```bash
-pipx install sro-config        # or:  uv tool install sro-config
-```
-NB: pipx is its own installation tool used to download software packages in isolated environments. If intending to use pipx for this package, please refer to pipx installation guides. For Windows users:
+## From PyPI
 
 ```bash
 python -m pip install --user pipx
 python -m pipx ensurepath
 
-#Restart your terminal.
+# Close your terminal and open a new one
 
 python -m pipx install sro-config
+
+# Close the terminal and reopen again
+
+sro-config --help
 ```
 
-For Mac users, the GUI interface - built in Tkinter - requires further downloads. The quickest and easiest way to resolve this conflict, is to use the Mac installation of python on python.org, which bundles Tk as required. You can then use the command:
+For an isolated install of just the command-line tool (recommended if you only want to run it, not import it):
 
 ```bash
-pip3 install sro-config
+uv tool install sro-config
 ```
+??? info "New to pipx? (optional reading)"
 
-Alternatively, using Homebrew, one may instead use:
+    As a note, installation via pip may throw an error if the installed version of Python
+    doesn't add its `Scripts` folder to `PATH` by default. Typing `sro-config` in-terminal
+    may therefore behave unexpectedly. This should not be a concern for those who have used
+    the python.org installer, which adds to `PATH` automatically.
+
+    This is avoided when using pipx.
+
+    pipx is a separate installation tool that downloads Python command-line
+    packages into isolated environments, so `sro-config` and its dependencies
+    never clash with anything else on your system. If you intend to use pipx,
+    see the [pipx installation guide](https://pipx.pypa.io/latest/how-to/install-pipx.html).
+
+
+## From source
 
 ```bash
-brew install pipx python-tk
-pipx ensurepath
-
-#Restart your terminal.
+git clone https://github.com/BJolly-97/SRO-Config
+cd SRO-Config
+pip install -e ".[dev]"
 ```
 
-Or run the headless CLI with no Python install via Docker:
+## Docker
+
+A headless image (published to GHCR on each release) runs the `dict` and `config`
+commands with no Python install on the host — useful for reproducible batch runs on a
+cluster or in CI. Mount your working directory at `/data`:
 
 ```bash
-docker run --rm -v "$PWD:/data" ghcr.io/bjolly-97/sro-config config --dict-dir . --sublattice 0 --rmc6f run.rmc6f
+docker run --rm -v "$PWD:/data" ghcr.io/bjolly-97/sro-config \
+    config --dict-dir . --sublattice 0 --rmc6f run.rmc6f
 ```
 
-Either way you get one command, **`sro-config`**. (The importable package is
-`sro_config`; the pre-package script names live in [`legacy/`](https://github.com/BJolly-97/SRO-Config/tree/main/legacy).)
+The interactive `vis` viewer and the desktop GUI need a display and are not usable from
+the container.
 
 ## Quickstart
 
